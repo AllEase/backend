@@ -1,0 +1,74 @@
+# Environment Configuration Template (MongoDB Version)
+# Copy this file to .env and fill in your actual values
+
+# Django Settings
+SECRET_KEY=django-insecure-generate-a-secure-key-for-production
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1,your-domain.com
+
+# MongoDB Configuration
+MONGODB_DB_NAME=multiservice_platform
+MONGODB_HOST=localhost
+MONGODB_PORT=27017
+MONGODB_USERNAME=multiservice_user
+MONGODB_PASSWORD=your_secure_password
+MONGODB_AUTH_SOURCE=admin
+
+# Alternative MongoDB Connection String (if using MongoDB Atlas)
+# MONGODB_CONNECTION_STRING=mongodb+srv://username:password@cluster.mongodb.net/multiservice_platform?retryWrites=true&w=majority
+
+# Redis Configuration
+REDIS_URL=redis://localhost:6379/0
+
+# Payment Gateway Credentials
+RAZORPAY_API_KEY=your_razorpay_key_id
+RAZORPAY_API_SECRET=your_razorpay_key_secret
+
+# Firebase for Push Notifications
+FIREBASE_SERVER_KEY=your_firebase_server_key
+
+# SMS Configuration (Twilio)
+TWILIO_ACCOUNT_SID=your_twilio_account_sid
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
+TWILIO_PHONE_NUMBER=your_twilio_phone_number
+
+# Email Configuration
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your_email@gmail.com
+EMAIL_HOST_PASSWORD=your_app_password
+DEFAULT_FROM_EMAIL=noreply@yourdomain.com
+
+# Google Maps API
+GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+
+# AWS S3 Configuration (Optional - for file storage)
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_STORAGE_BUCKET_NAME=your_bucket_name
+AWS_S3_REGION_NAME=ap-south-1
+
+# MongoDB Atlas Configuration (if using cloud)
+MONGODB_ATLAS_CLUSTER_NAME=your_cluster_name
+MONGODB_ATLAS_PUBLIC_KEY=your_atlas_public_key
+MONGODB_ATLAS_PRIVATE_KEY=your_atlas_private_key
+
+# Third-party Service URLs
+FRONTEND_URL=http://localhost:3000
+ADMIN_URL=http://localhost:8000/admin/
+
+# Security Settings (Production)
+SECURE_SSL_REDIRECT=False
+SESSION_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=False
+
+# GridFS Settings (MongoDB file storage)
+GRIDFS_COLLECTION=fs
+GRIDFS_DATABASE=multiservice_platform
+
+# Elasticsearch Configuration (Optional - for search)
+ELASTICSEARCH_HOST=localhost
+ELASTICSEARCH_PORT=9200
+ELASTICSEARCH_USERNAME=
+ELASTICSEARCH_PASSWORD=
