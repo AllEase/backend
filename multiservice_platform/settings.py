@@ -2,15 +2,21 @@
 # MongoDB Multi-Service Platform Settings
 # """
 import os
-import mongoengine
 from pathlib import Path
 from decouple import config
+import datetime
+from mongoengine import connect
 
+
+SECRET_KEY = 'qwertyuiopqwertyuiop'
+JWT_EXPIRATION_SECONDS = 3600
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-me')
 DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "192.168.0.7"
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -19,23 +25,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-#     # Third party apps
-#     # 'rest_framework',
-#     # 'corsheaders',
-#     # 'drf_yasg',
-#     # 'django_mongoengine',
-    
-    # Local apps
-    'apps.accounts.apps.AccountsConfig',
-    'apps.food_service.apps.FoodServiceConfig',
-    'apps.grocery_service.apps.GroceryServiceConfig',
-    'apps.travel_service.apps.TravelServiceConfig',
-    'apps.shopping_service.apps.ShoppingServiceConfig',
-    'apps.vendor_management.apps.VendorManagementConfig',
-    'apps.payment_service.apps.PaymentServiceConfig',
-    'apps.notifications.apps.NotificationsConfig',
-    'apps.analytics.apps.AnalyticsConfig',
+    'rest_framework',
+    'accounts',
+    # 'apps.food_service.apps.FoodServiceConfig',
+    # 'apps.grocery_service.apps.GroceryServiceConfig',
+    # 'apps.travel_service.apps.TravelServiceConfig',
+    # 'apps.shopping_service.apps.ShoppingServiceConfig',
+    # 'apps.vendor_management.apps.VendorManagementConfig',
+    # 'apps.payment_service.apps.PaymentServiceConfig',
+    # 'apps.notifications.apps.NotificationsConfig',
+    # 'apps.analytics.apps.AnalyticsConfig',
 ]
 
 MIDDLEWARE = [
@@ -51,23 +50,10 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'multiservice_platform.urls'
 WSGI_APPLICATION = 'multiservice_platform.wsgi.application'
 
-
-# # MongoDB Configuration
-# mongoengine.connect(
-#     db=config('MONGODB_DB_NAME', default='multiservice_platform'),
-#     host=config('MONGODB_HOST', default='localhost'),
-#     port=config('MONGODB_PORT', default=27017, cast=int),
-#     username=config('MONGODB_USERNAME', default=''),
-#     password=config('MONGODB_PASSWORD', default=''),
-# )
-
-# Use SQLite for Django's built-in apps
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+connect(
+    db="testDB",
+    host="mongodb+srv://allease2025:1122334455@allease.rvbltg5.mongodb.net/?retryWrites=true&w=majority&appName=allease",
+)
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
@@ -82,17 +68,11 @@ LANGUAGE_CODE = 'en-us'
 
 # REST Framework
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20
+     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 
-# CORS settings
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
@@ -101,8 +81,8 @@ CORS_ALLOWED_ORIGINS = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # You can add template directories here if needed
-        'APP_DIRS': True,  # Enables loading templates from each app's templates/ folder
+        'DIRS': [BASE_DIR / "templates"],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
